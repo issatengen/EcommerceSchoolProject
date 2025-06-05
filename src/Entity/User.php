@@ -8,11 +8,11 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
+use App\Entity\Role; // Add this line
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[ORM\UniqueConstraint(name: 'UNIQ_IDENTIFIER_EMAIL', fields: ['email'])]
-class
-User implements UserInterface, PasswordAuthenticatedUserInterface
+class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -22,11 +22,11 @@ User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(length: 180)]
     private ?string $email = null;
 
-    /**
-     * @var list<string> The user roles
-     */
-    #[ORM\Column]
-    private array $roles = [];
+    // /**
+    //  * @var list<string> The user roles
+    //  */
+    // #[ORM\Column]
+    // private array $roles = [];
 
     /**
      * @var string The hashed password
@@ -40,26 +40,19 @@ User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(length: 100)]
     private ?string $name = null;
 
-    #[ORM\ManyToOne(targetEntity: self::class, inversedBy: 'user')]
+    #[ORM\ManyToOne(targetEntity: Role::class, inversedBy: 'users')]
     #[ORM\JoinColumn(nullable: false)]
-    private ?self $role = null;
-
-    /**
-     * @var Collection<int, self>
-     */
-    #[ORM\OneToMany(targetEntity: self::class, mappedBy: 'role', orphanRemoval: true)]
-    private Collection $user;
+    private ?Role $role = null;
 
     /**
      * @var Collection<int, Order>
      */
     #[ORM\OneToMany(targetEntity: Order::class, mappedBy: 'user', orphanRemoval: true)]
-    private Collection $orders;
+    private $orders;
 
     public function __construct()
     {
-        $this->user = new ArrayCollection();
-        $this->orders = new ArrayCollection();
+        $this->orders = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     public function getId(): ?int
@@ -94,21 +87,22 @@ User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     public function getRoles(): array
     {
-        $roles = $this->roles;
-        // guarantee every user at least has ROLE_USER
-        $roles[] = 'ROLE_USER';
-
-        return array_unique($roles);
-    }
-
-    /**
-     * @param list<string> $roles
-     */
-    public function setRoles(array $roles): static
-    {
-        $this->roles = $roles;
-
-        return $this;
+        // Always return at least ROLE_USER
+        $roles = [];
+        if ($this->role && $this->role->getCode()) {
+            $code = $this->role->getCode();
+            // Ensure the code is prefixed with ROLE_
+            if (str_starts_with($code, 'ROLE_')) {
+                $roles[] = $code;
+            } else {
+                $roles[] = 'ROLE_' . strtoupper($code);
+            }
+        }
+        // Guarantee at least ROLE_USER
+        if (!in_array('ROLE_USER', $roles)) {
+            $roles[] = 'ROLE_USER';
+        }
+        return $roles;
     }
 
     /**
@@ -159,12 +153,12 @@ User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    public function getRole(): ?self
+    public function getRole(): ?Role
     {
         return $this->role;
     }
 
-    public function setRole(?self $role): static
+    public function setRole(?Role $role): static
     {
         $this->role = $role;
 
@@ -172,39 +166,9 @@ User implements UserInterface, PasswordAuthenticatedUserInterface
     }
 
     /**
-     * @return Collection<int, self>
-     */
-    public function getUser(): Collection
-    {
-        return $this->user;
-    }
-
-    public function addUser(self $user): static
-    {
-        if (!$this->user->contains($user)) {
-            $this->user->add($user);
-            $user->setRole($this);
-        }
-
-        return $this;
-    }
-
-    public function removeUser(self $user): static
-    {
-        if ($this->user->removeElement($user)) {
-            // set the owning side to null (unless already changed)
-            if ($user->getRole() === $this) {
-                $user->setRole(null);
-            }
-        }
-
-        return $this;
-    }
-
-    /**
      * @return Collection<int, Order>
      */
-    public function getOrders(): Collection
+    public function getOrders()
     {
         return $this->orders;
     }
@@ -212,7 +176,7 @@ User implements UserInterface, PasswordAuthenticatedUserInterface
     public function addOrder(Order $order): static
     {
         if (!$this->orders->contains($order)) {
-            $this->orders->add($order);
+            $this->orders[] = $order;
             $order->setUser($this);
         }
 

@@ -10,7 +10,7 @@ use Doctrine\Migrations\AbstractMigration;
 /**
  * Auto-generated Migration: Please modify to your needs!
  */
-final class Version20250603051211 extends AbstractMigration
+final class Version20250603184941 extends AbstractMigration
 {
     public function getDescription(): string
     {
@@ -60,7 +60,7 @@ final class Version20250603051211 extends AbstractMigration
             ALTER TABLE order_line ADD CONSTRAINT FK_9CE58EE1CFFE9AD6 FOREIGN KEY (orders_id) REFERENCES `order` (id)
         SQL);
         $this->addSql(<<<'SQL'
-            ALTER TABLE user ADD CONSTRAINT FK_8D93D649D60322AC FOREIGN KEY (role_id) REFERENCES user (id)
+            ALTER TABLE user ADD CONSTRAINT FK_8D93D649D60322AC FOREIGN KEY (role_id) REFERENCES role (id)
         SQL);
     }
 

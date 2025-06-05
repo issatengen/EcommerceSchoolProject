@@ -17,6 +17,9 @@ final class CustomerController extends AbstractController
     #[Route(name: 'app_customer_index', methods: ['GET'])]
     public function index(CustomerRepository $customerRepository): Response
     {
+        if ($this->getUser() === null ) {
+            return $this->redirectToRoute('app_login');
+        }
         return $this->render('customer/index.html.twig', [
             'customers' => $customerRepository->findAll(),
         ]);
@@ -25,6 +28,9 @@ final class CustomerController extends AbstractController
     #[Route('/new', name: 'app_customer_new', methods: ['GET', 'POST'])]
     public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
+        if ($this->getUser() === null ) {
+            return $this->redirectToRoute('app_login');
+        }
         $customer = new Customer();
         $form = $this->createForm(CustomerForm::class, $customer);
         $form->handleRequest($request);
@@ -45,6 +51,9 @@ final class CustomerController extends AbstractController
     #[Route('/{id}', name: 'app_customer_show', methods: ['GET'])]
     public function show(Customer $customer): Response
     {
+        if ($this->getUser() === null ) {
+            return $this->redirectToRoute('app_login');
+        }
         return $this->render('customer/show.html.twig', [
             'customer' => $customer,
         ]);
@@ -53,6 +62,9 @@ final class CustomerController extends AbstractController
     #[Route('/{id}/edit', name: 'app_customer_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Customer $customer, EntityManagerInterface $entityManager): Response
     {
+        if ($this->getUser() === null ) {
+            return $this->redirectToRoute('app_login');
+        }
         $form = $this->createForm(CustomerForm::class, $customer);
         $form->handleRequest($request);
 
@@ -71,6 +83,9 @@ final class CustomerController extends AbstractController
     #[Route('/{id}', name: 'app_customer_delete', methods: ['POST'])]
     public function delete(Request $request, Customer $customer, EntityManagerInterface $entityManager): Response
     {
+        if ($this->getUser() === null ) {
+            return $this->redirectToRoute('app_login');
+        }
         if ($this->isCsrfTokenValid('delete'.$customer->getId(), $request->getPayload()->getString('_token'))) {
             $entityManager->remove($customer);
             $entityManager->flush();

@@ -3,9 +3,38 @@
 {% block title %}New Category{% endblock %}
 
 {% block body %}
-    <h1>Create new Category</h1>
-
-    {{ include('category/_form.html.twig') }}
-
-    <a href="{{ path('app_category_index') }}">back to list</a>
+    {{ include('partials/admin_navbar.html.twig') }}
+    <div class="container py-4">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h1 class="mb-0 h2">Create New Category</h1>
+            <a href="{{ path('app_category') }}" class="btn btn-secondary">
+                <i class="fa fa-arrow-left me-1"></i> Back to List
+            </a>
+        </div>
+    </div>
+    <hr class="my-1">
+    <div class="row container mt-2">
+        <div class="col-md-12 mb-4">
+            <p class="text-center text-muted">Fill out the form below to add a new category.</p>
+        </div>
+        <div class="col-md-6 bg-light p-4 rounded shadow">
+            {{ form_start(form) }}
+            <div class="mb-3">
+                <label for="category_label" class="form-label">Label</label>
+                {{ form_widget(form.label, {'attr': {'class': 'form-control'}}) }}
+            </div>
+            <div class="mb-3">
+                <label for="category_description" class="form-label">Description</label>
+                {{ form_widget(form.description, {'attr': {'class': 'form-control'}}) }}
+            </div>
+            <button class="btn btn-primary" type="submit">{{ button_label|default('Save') }}</button>
+            {{ form_end(form) }}
+        </div>
+        <div class="col-md-6 text-center">
+            <i class="fa-solid fa-folder-plus fa-5x text-primary"></i>
+            <h2 class="mt-5">Why Create a Category?</h2>
+            <p class="lead">Organize your products efficiently and enhance user experience.</p>
+            <p class="text-muted">Categories help customers find products easily and improve navigation.</p>
+        </div>
+    </div>
 {% endblock %}

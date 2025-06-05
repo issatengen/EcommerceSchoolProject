@@ -1,0 +1,48 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit User{% endblock %}
+
+{% block body %}
+    <h1>Edit User</h1>
+    
+    {{ include('partials/admin_navbar.html.twig') }}
+    <div class="container py-4">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h1 class="mb-0 h2">Edit User</h1>
+            <a href="{{ path('app_user_index') }}" class="btn btn-secondary">
+                <i class="fa fa-arrow-left me-1"></i> Back to List
+            </a>
+        </div>
+    </div>
+    <hr class="my-1">
+
+    <div class="row container mt-2">
+        <div class="col-md-12 mb-4">
+            <p class="text-center text-muted">Update the user information below.</p>
+        </div>
+        <div class="col-md-6 bg-light p-4 rounded shadow">
+            {{ form_start(form) }}
+            <div class="mb-3">
+                <label for="user_username" class="form-label">Username</label>
+                {{ form_widget(form.name, {'attr': {'class': 'form-control'}}) }}
+            </div>
+            <div class="mb-3">
+                <label for="user_email" class="form-label">Email</label>
+                {{ form_widget(form.email, {'attr': {'class': 'form-control'}}) }}
+            </div>
+            <div class="mb-3">
+                <label for="user_role" class="form-label">Role</label>
+                {{ form_widget(form.role, {'attr': {'class': 'form-select'}}) }}
+            </div>
+            <button class="btn btn-success" type="submit">{{ button_label|default('Update') }}</button>
+            {{ form_end(form) }}
+        </div>
+        <div class="col-md-6 text-center">
+            <i class="fa-solid fa-user-edit fa-5x text-success"></i>
+            <h2 class="mt-5">Edit User</h2>
+            <p class="lead">Modify user details and roles as needed.</p>
+            <p class="text-muted">Keep user information up to date for better management.</p>
+        </div>
+    </div>
+
+{% endblock %}

@@ -1,0 +1,100 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello AdminDashboardController!{% endblock %}
+
+{% block body %}
+{{ include('partials/admin_navbar.html.twig') }}
+
+<div class="container mt-5">
+    <h1 class="mb-4">Admin Dashboard</h1>
+    <div class="row">
+        <div class="col-md-3">
+            <div class="card text-white bg-primary mb-3">
+                <div class="card-header">Users</div>
+                <div class="card-body">
+                {% if userCount is not empty %}
+                    <h5 class="card-title">{{ userCount }}</h5>
+                {% else %}
+                    <h5 class="card-title">0</h5>
+                {% endif %}
+                    <p class="card-text">Total registered users</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card text-white bg-success mb-3">
+                <div class="card-header">Orders</div>
+                <div class="card-body">
+                    <h5 class="card-title">{{ ordersCount|default(0) }}</h5>
+                    <p class="card-text">Total orders placed</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card text-white bg-warning mb-3">
+                <div class="card-header">Products</div>
+                <div class="card-body">
+                    {% if productCount is not empty %}
+                        <h5 class="card-title">{{ productCount }}</h5>
+                    {% else %}
+                        <h5 class="card-title">0</h5>
+                    {% endif %}
+                    <p class="card-text">Total products listed</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card text-white bg-danger mb-3">
+                <div class="card-header">Revenue</div>
+                <div class="card-body">
+                    <h5 class="card-title">${{ totalRevenue|default(0) }}</h5>
+                    <p class="card-text">Total revenue</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <h2 class="mt-5">Recent Orders</h2>
+    <table class="table table-striped mt-3">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>User</th>
+                <th>Date</th>
+                <th>Status</th>
+                <th>Total</th>
+            </tr>
+        </thead>
+        <tbody>
+            {# {% for order in recentOrders %} #}
+                <tr>
+                    <td>1</td>
+                    <td>john.doe@example.com</td>
+                    <td>2024-06-01 10:30</td>
+                    <td>Completed</td>
+                    <td>$120.00</td>
+                </tr>
+                <tr>
+                    <td>2</td>
+                    <td>jane.smith@example.com</td>
+                    <td>2024-06-02 14:15</td>
+                    <td>Pending</td>
+                    <td>$75.50</td>
+                </tr>
+                <tr>
+                    <td>3</td>
+                    <td>alice.wilson@example.com</td>
+                    <td>2024-06-03 09:45</td>
+                    <td>Shipped</td>
+                    <td>$200.00</td>
+                </tr>
+                
+            {# {% else %} #}
+                {# <tr>
+                    <td colspan="5" class="text-center">No recent orders.</td>
+                </tr> #}
+            {# {% endfor %} #}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

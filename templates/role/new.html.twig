@@ -3,9 +3,40 @@
 {% block title %}New Role{% endblock %}
 
 {% block body %}
-    <h1>Create new Role</h1>
+{{ include('partials/admin_navbar.html.twig') }}
+<div class="container py-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1 class="mb-0 h2">Create New Role</h1>
+        <a href="{{ path('app_role_index') }}" class="btn btn-secondary">
+            <i class="fa fa-arrow-left me-1"></i> Back to List
+        </a>
+    </div>
+</div>
+<hr class="my-1">
+<div class="row container mt-2">
+    <div class="col-md-6 bg-light p-4 rounded shadow">
+        {{ form_start(form) }}
+        <div class="mb-3">
+            <label for="role_name" class="form-label">Code</label>
+            {{ form_widget(form.code, {'attr': {'class': 'form-control'}}) }}
+        </div>
+        <div class="mb-3">
+            <label for="role_name" class="form-label">Label</label>
+            {{ form_widget(form.label, {'attr': {'class': 'form-control'}}) }}
+        </div>
+        <div class="mb-3">
+            <label for="role_name" class="form-label">Description</label>
+            {{ form_widget(form.description, {'attr': {'class': 'form-control'}}) }}
+        </div>
+        <button class="btn btn-primary" type="submit">{{ button_label|default('Save') }}</button>
+        {{ form_end(form) }}
+    </div>
+    <div class="col-md-6 text-center">
+        <i class="fa-solid fa-user-tag fa-5x text-primary"></i>
+        <h2 class="mt-5">Why Create a Role?</h2>
+        <p class="lead">Define user permissions and access levels effectively.</p>
+        <p class="text-muted">Roles help manage user capabilities and enhance security.</p>
+    </div>
+</div>
 
-    {{ include('role/_form.html.twig') }}
-
-    <a href="{{ path('app_role_index') }}">back to list</a>
 {% endblock %}

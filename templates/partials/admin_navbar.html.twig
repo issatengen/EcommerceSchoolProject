@@ -1,0 +1,57 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-info-subtle mb-2">
+    <div class="container text-primary-emphasis">
+        <i class="fa fa-cog fa-spin h2 me-2"></i>
+        <a class="h4 text-decoration-none fw-bold text-primary-emphasis" href="#">Admin Panel</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#adminNavbar" aria-controls="adminNavbar" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="adminNavbar">
+            <ul class="navbar-nav me-auto mb-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link {% if app.request.attributes.get('_route') starts with 'app_category' %} fw-bold {% endif %}" href="{{ path('app_category') }}">
+                        <i class="fa ms-2 me-1 fa-list{% if app.request.attributes.get('_route') starts with 'app_category' %} fa-spin{% endif %}"></i> Categories 
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link {% if app.request.attributes.get('_route') starts with 'app_user' %} fw-bold {% endif %}" href="{{ path('app_user_index') }}">
+                        <i class="fa fa-users{% if app.request.attributes.get('_route') starts with 'app_user' %} fa-spin {% endif %}"></i> Users 
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link {% if app.request.attributes.get('_route') starts with 'app_role' %} fw-bold {% endif %}" href="{{ path('app_role_index') }}">
+                        <i class="fa fa-shield-alt{% if app.request.attributes.get('_route') starts with 'app_role' %} fa-spin {% endif %}"></i> Role 
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link {% if app.request.attributes.get('_route') starts with 'app_item' %} fw-bold {% endif %}" href="{{ path('app_item_index') }}">
+                        <i class="fa fa-box{% if app.request.attributes.get('_route') starts with 'app_item' %} fa-spin {% endif %}"></i> Products 
+                    </a>
+                </li>
+            </ul>
+            {% if app.user %}
+                <li class="nav-item dropdown ms-auto">
+                    <a class="nav-link dropdown-toggle fw-bold d-flex align-items-center" href="#" id="adminUserDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <i class="fa fa-user-circle me-2"></i>
+                        {{ app.user.name|default(app.user.email) }}
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="adminUserDropdown">
+                        <li>
+                            <span class="dropdown-item-text">
+                                <strong>{{ app.user.name|default('No Name') }}</strong><br>
+                                <strong>{{ app.user.role.label }}</strong><br>
+                                <small>{{ app.user.email }}</small>
+                            </span>
+                        </li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li>
+                            <a class="dropdown-item" href="{{ path('app_logout') }}">
+                                <i class="fa fa-sign-out-alt me-2"></i>Logout
+                            </a>
+                        </li>
+                        <!-- Add more dropdown items here if needed -->
+                    </ul>
+                </li>
+            {% endif %}
+        </div>
+    </div>
+</nav>

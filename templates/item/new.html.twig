@@ -3,9 +3,52 @@
 {% block title %}New Item{% endblock %}
 
 {% block body %}
-    <h1>Create new Item</h1>
-
-    {{ include('item/_form.html.twig') }}
-
-    <a href="{{ path('app_item_index') }}">back to list</a>
+{{ include('partials/admin_navbar.html.twig') }}
+<div class="container py-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1 class="mb-0 h2">Create New Item</h1>
+        <a href="{{ path('app_item_index') }}" class="btn btn-secondary">
+            <i class="fa fa-arrow-left me-1"></i> Back to List
+        </a>
+    </div>
+</div>
+<hr class="my-1">
+<div class="row container mt-2 mb-4">
+    <div class="col-md-12 mb-4">
+        <p class="text-center text-muted">Fill out the form below to add a new item.</p>
+    </div>
+    <div class=" col-md-6 bg-light p-4 rounded shadow">
+        {{ form_start(form) }}
+        <div class="mb-3">
+            <label for="item_name" class="form-label">Item Name</label>
+            {{ form_widget(form.designation, {'attr': {'class': 'form-control'}}) }}
+        </div>
+        <div class="mb-3">
+            <label for="item_description" class="form-label">Description</label>
+            {{ form_widget(form.description, {'attr': {'class': 'form-control'}}) }}    
+        </div>
+        <div class="mb-3">
+            <label for="item_price" class="form-label">Price</label>
+            {{ form_widget(form.price, {'attr': {'class': 'form-control'}}) }}
+        </div>
+        <div class="mb-3">
+            <label for="item_category" class="form-label">Category</label>
+            {{ form_widget(form.category, {'attr': {'class': 'form-select'}}) }}    
+        </div>
+        <div class="mb-3">
+            <label for="item_image" class="form-label">Image</label>
+            {{ form_widget(form.image, {'attr': {'class': 'form-control'}}) }}
+            <small class="form-text text-muted">Please upload an image for the item.</small>
+        </div>
+        <button class="btn btn-primary" type="submit">{{ button_label|default('Save') }}</button>
+        {{ form_end(form) }}
+    </div>
+    <div class="col-md-6 text-center">
+        <h5 class="text-center mb-3">Item Preview</h5>
+        <i class="fa-solid fa-box-open fa-5x text-primary"></i>
+        <h2 class="mt-5">Why Add a Product?</h2>
+        <p class="lead">Expand your store's offerings and reach more customers.</p>
+        <p class="text-muted">Adding products keeps your catalog fresh and helps customers discover new items.</p>
+    </div>
+</div>
 {% endblock %}

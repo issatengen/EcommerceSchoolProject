@@ -1,0 +1,50 @@
+
+    {# Responsive Navbar for E-commerce Website #}
+    {# // filepath: c:\Users\nji\Desktop\E-store\EcommerceSchoolProject\templates\partials\navbar.html.twig #}
+    <nav class="navbar navbar-expand-lg navbar-light bg-primary-subtle shadow-sm">
+        <div class="container">
+            <a class="navbar-brand fw-bold text-primary-emphasis" href="{{ path('app_home') }}">
+                <i class="fa-solid fa-shop h1 me-2"></i>      
+                <span class="h3 fw-bolder">
+                    PHIBMAT<span class="text-warning-emphasis h3">e-Store</span>
+                </span>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#estoreNavbar" aria-controls="estoreNavbar" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="estoreNavbar">
+                <ul class="navbar-nav ms-auto mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link {% if app.request.attributes.get('_route') starts with 'app_home' %} active text-primary-emphasis fw-bold {% endif %}" aria-current="page" href="{{ path('app_home') }}">
+                            <i class="fa fa-house me-1{% if app.request.attributes.get('_route') starts with 'app_home' %} fa-spin{% endif %}"></i>Home
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link {% if app.request.attributes.get('_route') starts with 'app_feature' %} active text-primary-emphasis fw-bold {% endif %}" href="#">
+                            <i class="fa-solid fa-star me-1{% if app.request.attributes.get('_route') starts with 'app_feature' %} fa-spin{% endif %}"></i>Featured
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link {% if app.request.attributes.get('_route') starts with 'app_contact' %} active text-primary-emphasis fw-bold {% endif %}" href="#">
+                            <i class="fa-solid fa-phone me-1{% if app.request.attributes.get('_route') starts with 'app_contact' %} fa-spin{% endif %}"></i>Contact
+                        </a>
+                    </li>
+                </ul>      <ul class="navbar-nav ms-lg-3">
+                    <li class="nav-item">
+                        <a class="nav-link position-relative" href="#">
+                            <i class="fa-solid fa-cart-shopping"></i>
+                            <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                                0
+                            </span>
+                        </a>
+                    </li>
+                    <li class="nav-item ms-2">
+                        <a class="btn btn-outline-primary" href="{{ path('app_login') }}" role="button">
+                            <i class="fa-solid fa-user"></i> Login
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+<!-- End of Navbar -->

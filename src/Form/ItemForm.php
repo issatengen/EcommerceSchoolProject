@@ -14,14 +14,29 @@ class ItemForm extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('code')
             ->add('designation')
             ->add('price')
             ->add('description')
-            ->add('image')
+            ->add('image', \Symfony\Component\Form\Extension\Core\Type\FileType::class, [
+                'label' => 'Image (PNG, JPG)',
+                'mapped' => false,
+                'required' => false,
+                'constraints' => [
+                    new \Symfony\Component\Validator\Constraints\File([
+                        'maxSize' => '1024k',
+                        'mimeTypes' => [
+                            'image/jpeg',
+                            'image/png',
+                        ],
+                        'mimeTypesMessage' => 'Please upload a valid image (PNG or JPG)',
+                    ]),
+                ],
+            ])
             ->add('category', EntityType::class, [
                 'class' => Category::class,
-                'choice_label' => 'id',
+                'choice_label' => 'label',
+                'placeholder' => 'Select a category',
+                'required' => true,
             ])
         ;
     }
