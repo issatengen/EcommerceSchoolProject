@@ -1,0 +1,88 @@
+{% extends 'base.html.twig' %}
+{% block title %}
+    My basket
+{% endblock %}
+
+{% block body %}
+
+<div class="container py-5">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1 class="mb-0 fw-bold text-primary">My Basket</h1>
+        <a href="{{ path('app_home') }}" class="btn btn-outline-primary shadow-sm">
+            <i class="fa fa-plus me-1"></i> Add Items
+        </a>
+    </div>
+    <div class="card border-0 shadow-lg rounded-4">
+        <div class="card-body p-0">
+            {% if orderLines is not empty %}
+                <div class="table-responsive">
+                    <table class="table align-middle mb-0">
+                        <thead class="table-primary">
+                            <tr>
+                                <th scope="col">Image</th>
+                                <th scope="col">Product</th>
+                                <th scope="col" class="text-center">Quantity</th>
+                                <th scope="col" class="text-end">Unit Price</th>
+                                <th scope="col" class="text-end">Total</th>
+                                <th scope="col" class="text-center">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for items in orderLines %}
+                                <tr>
+                                    <td>
+                                        <img src="{{ asset('upload_images/' ~ items.item.image) }}"
+                                             alt="{{ items.item.designation }}"
+                                             class="rounded shadow-sm"
+                                             style="width: 6rem; height: 6rem;"
+                                             width="70" height="70">
+                                    </td>
+                                    <td>
+                                        <div class="fw-semibold">{{ items.item.designation }}</div>
+                                        <div class="text-muted small">
+                                            {{ items.item.description|length > 60 ? items.item.description|slice(0, 60) ~ '...' : items.item.description }}
+                                        </div>
+                                    </td>
+                                    <td class="text-center">{{ items.quantity }}</td>
+                                    <td class="text-end">{{ items.item.price|number_format(2, '.', ',') }} {{ currency_symbol|default('FCFA') }}</td>
+                                    <td class="text-end">{{ (items.amount)|number_format(2, '.', ',') }} {{ currency_symbol|default('FCFA') }}</td>
+                                    <td class="text-center">
+                                        <form method="post" action="{{ path('app_order_item_delete', {'id': items.id}) }}" class="d-inline">
+                                            <input type="hidden" name="_token" value="{{ csrf_token('remove' ~ items.id) }}">
+                                            <button type="submit" class="btn btn-sm btn-outline-danger" title="Remove from basket">
+                                                <i class="fa fa-trash"></i>
+                                            </button>
+                                        </form>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                        <tfoot>
+                            <tr class="bg-light fw-bold">
+                                <td colspan="2"></td>
+                                <td class="text-center">{{ total|number_format(0, '.', ',') }} items</td>
+                                <td class="text-end">Total:</td>
+                                <td class="text-end text-primary fs-5">{{ totalAmount|number_format(2, '.', ',') }} {{ currency_symbol|default('FCFA') }}</td>
+                                <td></td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+                <div class="d-flex justify-content-end mt-4">
+                    <a href="{{ path('app_checkout')}}" class="btn btn-success btn-lg px-4 shadow">
+                        <i class="fa fa-credit-card me-2"></i> Proceed to Checkout
+                    </a>
+                </div>
+            {% else %}
+                <div class="text-center py-5">
+                    <i class="fa fa-shopping-basket fa-3x text-muted mb-3"></i>
+                    <p class="lead mb-4">Your basket is empty.</p>
+                    <a href="{{ path('app_home') }}" class="btn btn-primary">
+                        <i class="fa fa-plus me-1"></i> Start Shopping
+                    </a>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}

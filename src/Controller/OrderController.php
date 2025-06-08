@@ -34,12 +34,18 @@ final class OrderController extends AbstractController
         $order = new Order();
         $form = $this->createForm(OrderForm::class, $order);
         $form->handleRequest($request);
-
+        $count = $entityManager->getRepository(Order:: class)->count([]);
         if ($form->isSubmitted() && $form->isValid()) {
+            if ($this->getUser() !== null) {
+                $order->setCode('CMD' . $count);
+                // $order->setDate(new \DateTime());
+                $order->setUser($this->getUser());
+            }
             $entityManager->persist($order);
             $entityManager->flush();
+            $this->addFlash('success', 'Order created successfully you can now add products and purchase');
 
-            return $this->redirectToRoute('app_order_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_home', [], Response::HTTP_SEE_OTHER);
         }
 
         return $this->render('order/new.html.twig', [
@@ -93,4 +99,5 @@ final class OrderController extends AbstractController
 
         return $this->redirectToRoute('app_order_index', [], Response::HTTP_SEE_OTHER);
     }
+
 }

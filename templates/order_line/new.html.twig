@@ -3,9 +3,33 @@
 {% block title %}New OrderLine{% endblock %}
 
 {% block body %}
-    <h1>Create new OrderLine</h1>
-
-    {{ include('order_line/_form.html.twig') }}
-
-    <a href="{{ path('app_order_line_index') }}">back to list</a>
+    <div class="container py-4">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h1 class="mb-0 h2">Add item to your order</h1>
+            <a href="{{ path('app_home') }}" class="btn btn-secondary">
+                <i class="fa fa-arrow-left me-1"></i> Back to home
+            </a>
+        </div>
+    </div>
+    <hr class="my-1">
+    <div class="row container mt-2 mb-4">
+        <div class="col-md-12 mb-4">
+            <p class="text-center text-muted">Fill out the form below to add a new category.</p>
+        </div>
+        <div class="col-md-6 bg-light p-4 rounded shadow">
+            {{ form_start(form) }}
+            <div class="mb-3">
+                <label for="quantity" class="form-label">Quantity</label>
+                {{ form_widget(form.quantity, {'attr': {'class': 'form-control'}}) }}
+            </div>
+            <button class="btn btn-primary" type="submit">{{ button_label|default('Save') }}</button>
+            {{ form_end(form) }}
+        </div>
+        <div class="col-md-6 text-center">
+            <i class="fa-solid fa-cart-plus fa-5x text-success"></i>
+            <h2 class="mt-5">Why Add a Product to Your Order?</h2>
+            <p class="lead">Easily customize your order by selecting the products you need.</p>
+            <p class="text-muted">Adding products to your order ensures you get exactly what you want and streamlines the checkout process.</p>
+        </div>
+    </div>
 {% endblock %}

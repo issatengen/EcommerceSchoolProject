@@ -16,15 +16,15 @@ class OrderLineForm extends AbstractType
     {
         $builder
             ->add('quantity')
-            ->add('amount')
-            ->add('item', EntityType::class, [
-                'class' => Item::class,
-                'choice_label' => 'id',
-            ])
-            ->add('orders', EntityType::class, [
-                'class' => Order::class,
-                'choice_label' => 'id',
-            ])
+            // ->add('amount')
+            // ->add('item', EntityType::class, [
+            //     'class' => Item::class,
+            //     'choice_label' => 'id',
+            // ])
+            // ->add('orders', EntityType::class, [
+            //     'class' => Order::class,
+            //     'choice_label' => 'id',
+            // ])
         ;
     }
 

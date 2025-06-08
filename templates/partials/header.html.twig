@@ -31,20 +31,58 @@
                     </li>
                 </ul>      <ul class="navbar-nav ms-lg-3">
                     <li class="nav-item">
-                        <a class="nav-link position-relative" href="#">
-                            <i class="fa-solid fa-cart-shopping"></i>
-                            <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
-                                0
-                            </span>
-                        </a>
-                    </li>
-                    <li class="nav-item ms-2">
-                        <a class="btn btn-outline-primary" href="{{ path('app_login') }}" role="button">
-                            <i class="fa-solid fa-user"></i> Login
-                        </a>
-                    </li>
+                        <div class="nav-item dropdown">
+                            <a class="nav-link position-relative dropdown-toggle" href="#" id="cartDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                <i class="fa-solid fa-cart-shopping"></i>
+                                <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                                    0
+                                </span>
+                            </a>
+                            <ul class="dropdown-menu dropdown-menu-end p-3" aria-labelledby="cartDropdown" style="min-width: 250px;">
+                                <li class="text-center text-muted small">Your cart is empty</li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li>
+                                    <a class="dropdown-item text-center" href="{{ path('app_order_new') }}">
+                                        Create order
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item text-center" href="{{ path('app_order_singleC') }}">
+                                        View Orders
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>      </li>
+                    {% if app.user %}
+                        <li class="nav-item dropdown ms-auto">
+                            <a class="nav-link text-success d-flex align-items-center" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                <i class="fa ms-3 h3 fa-user-circle me-2" title="{{ app.user.name|default(app.user.email) }}"></i>
+                            </a>
+                        </li>
+                        {% if app.user.role.code == 'ADMIN' or app.user.role.code == 'SUSER' %}
+                            <li class="nav-item dropdown ms-auto">
+                                <a class="nav-link text-success fw-bold d-flex align-items-center" href="{{ path('app_admin_dashboard') }}">
+                                    <i class="fa ms-3 h3 fa-dashboard me-2" title="Dashboard"></i>
+                                </a>
+                            </li>
+                        {% endif %}
+                        <li class="nav-item dropdown ms-auto">
+                            <a class="nav-link text-danger fw-bold d-flex align-items-center" href="{{ path('app_logout') }}">
+                                <i class="fa ms-3 h3 fa-sign-out me-2" title="sign-out"></i>
+                            </a>
+                        </li>
+                    {% else %}
+                        <li class="nav-item ms-4">
+                            <a class="btn btn-warning rounded-circle" href="{{ path('app_login') }}" role="button" title="Create your account on Logix e-store">
+                                <i class="fa h3 fa-sign-in me-2" title="Login to your account"></i>
+                            </a>
+                        </li>
+                    {% endif %} 
                 </ul>
             </div>
         </div>
     </nav>
+    {# ...existing code... #}
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+{# ...existing code... #}
 <!-- End of Navbar -->

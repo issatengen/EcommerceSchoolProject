@@ -19,6 +19,7 @@ class OrderLine
     #[ORM\Column]
     private ?float $amount = null;
 
+
     #[ORM\ManyToOne(inversedBy: 'orderLine')]
     #[ORM\JoinColumn(nullable: false)]
     private ?Item $item = null;
@@ -27,10 +28,12 @@ class OrderLine
     #[ORM\JoinColumn(nullable: false)]
     private ?Order $orders = null;
 
+
     public function getId(): ?int
     {
         return $this->id;
     }
+
 
     public function getQuantity(): ?int
     {

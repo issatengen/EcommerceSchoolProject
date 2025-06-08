@@ -10,7 +10,7 @@ use Doctrine\Migrations\AbstractMigration;
 /**
  * Auto-generated Migration: Please modify to your needs!
  */
-final class Version20250603184941 extends AbstractMigration
+final class Version20250607140802 extends AbstractMigration
 {
     public function getDescription(): string
     {
@@ -24,13 +24,10 @@ final class Version20250603184941 extends AbstractMigration
             CREATE TABLE category (id INT AUTO_INCREMENT NOT NULL, code VARCHAR(10) NOT NULL, label VARCHAR(50) NOT NULL, description VARCHAR(200) DEFAULT NULL, PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB
         SQL);
         $this->addSql(<<<'SQL'
-            CREATE TABLE customer (id INT AUTO_INCREMENT NOT NULL, code VARCHAR(10) NOT NULL, email VARCHAR(100) NOT NULL, address VARCHAR(200) NOT NULL, PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB
-        SQL);
-        $this->addSql(<<<'SQL'
             CREATE TABLE item (id INT AUTO_INCREMENT NOT NULL, category_id INT NOT NULL, code VARCHAR(10) NOT NULL, designation VARCHAR(100) NOT NULL, price DOUBLE PRECISION NOT NULL, description VARCHAR(255) DEFAULT NULL, image VARCHAR(255) NOT NULL, INDEX IDX_1F1B251E12469DE2 (category_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB
         SQL);
         $this->addSql(<<<'SQL'
-            CREATE TABLE `order` (id INT AUTO_INCREMENT NOT NULL, customer_id INT NOT NULL, user_id INT NOT NULL, code VARCHAR(10) NOT NULL, date DATETIME NOT NULL, INDEX IDX_F52993989395C3F3 (customer_id), INDEX IDX_F5299398A76ED395 (user_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB
+            CREATE TABLE `order` (id INT AUTO_INCREMENT NOT NULL, user_id INT NOT NULL, code VARCHAR(10) NOT NULL, date DATETIME NOT NULL, status TINYINT(1) DEFAULT NULL, INDEX IDX_F5299398A76ED395 (user_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB
         SQL);
         $this->addSql(<<<'SQL'
             CREATE TABLE order_line (id INT AUTO_INCREMENT NOT NULL, item_id INT NOT NULL, orders_id INT NOT NULL, quantity INT NOT NULL, amount DOUBLE PRECISION NOT NULL, INDEX IDX_9CE58EE1126F525E (item_id), INDEX IDX_9CE58EE1CFFE9AD6 (orders_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB
@@ -46,9 +43,6 @@ final class Version20250603184941 extends AbstractMigration
         SQL);
         $this->addSql(<<<'SQL'
             ALTER TABLE item ADD CONSTRAINT FK_1F1B251E12469DE2 FOREIGN KEY (category_id) REFERENCES category (id)
-        SQL);
-        $this->addSql(<<<'SQL'
-            ALTER TABLE `order` ADD CONSTRAINT FK_F52993989395C3F3 FOREIGN KEY (customer_id) REFERENCES customer (id)
         SQL);
         $this->addSql(<<<'SQL'
             ALTER TABLE `order` ADD CONSTRAINT FK_F5299398A76ED395 FOREIGN KEY (user_id) REFERENCES user (id)
@@ -71,9 +65,6 @@ final class Version20250603184941 extends AbstractMigration
             ALTER TABLE item DROP FOREIGN KEY FK_1F1B251E12469DE2
         SQL);
         $this->addSql(<<<'SQL'
-            ALTER TABLE `order` DROP FOREIGN KEY FK_F52993989395C3F3
-        SQL);
-        $this->addSql(<<<'SQL'
             ALTER TABLE `order` DROP FOREIGN KEY FK_F5299398A76ED395
         SQL);
         $this->addSql(<<<'SQL'
@@ -87,9 +78,6 @@ final class Version20250603184941 extends AbstractMigration
         SQL);
         $this->addSql(<<<'SQL'
             DROP TABLE category
-        SQL);
-        $this->addSql(<<<'SQL'
-            DROP TABLE customer
         SQL);
         $this->addSql(<<<'SQL'
             DROP TABLE item

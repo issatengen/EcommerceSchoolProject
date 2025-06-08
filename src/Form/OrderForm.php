@@ -2,7 +2,6 @@
 
 namespace App\Form;
 
-use App\Entity\Customer;
 use App\Entity\Order;
 use App\Entity\User;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
@@ -15,16 +14,12 @@ class OrderForm extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('code')
+            // ->add('code')
             ->add('date')
-            ->add('customer', EntityType::class, [
-                'class' => Customer::class,
-                'choice_label' => 'id',
-            ])
-            ->add('user', EntityType::class, [
-                'class' => User::class,
-                'choice_label' => 'id',
-            ])
+            // ->add('user', EntityType::class, [
+            //     'class' => User::class,
+            //     'choice_label' => 'id',
+            // ])
         ;
     }
 

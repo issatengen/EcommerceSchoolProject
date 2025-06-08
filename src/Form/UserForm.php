@@ -16,11 +16,14 @@ class UserForm extends AbstractType
     {
         $builder
             ->add('name')
-            ->add('email')
-            ->add('role', EntityType::class, [
+            ->add('email');
+            
+        if ($options['include_role']) {
+            $builder->add('role', EntityType::class, [
                 'class' => Role::class,
                 'choice_label' => 'label',
             ]);
+        }
         if ($options['include_password']) {
             $builder->add('password', PasswordType::class);
         }
@@ -31,6 +34,7 @@ class UserForm extends AbstractType
         $resolver->setDefaults([
             'data_class' => User::class,
             'include_password' => false,
+            'include_role' => false,
         ]);
     }
 }

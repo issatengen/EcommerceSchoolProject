@@ -1,0 +1,65 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello CheckoutController!{% endblock %}
+
+{% block body %}
+<div class="container my-5">
+    <div class="row justify-content-center">
+        <div class="col-12 col-md-10 col-lg-10">
+            <div class="bg-success-subtle shadow-sm pb-4 rounded">
+                <div class="card-body">
+                    <h2 class="text-primary-emphasis ms-5 mb-4">Checkout</h2>
+                    <!-- Payment Logos -->
+                    <div class="d-flex ms-5 align-items-center mb-4 gap-3">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/4/41/Visa_Logo.png" alt="Visa" style="height:32px;">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/0/04/Mastercard-logo.png" alt="Mastercard" style="height:32px;">
+                        <img src="{{ asset('svg/orange.png') }}" alt="Orange Money" style="height:32px;">
+                        <img src="{{ asset('svg/mtn.jpg') }}" alt="MTN Mobile Money" style="height:32px;">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/b/b5/PayPal.svg" alt="PayPal" style="height:32px;">
+                    </div>
+                    <form method="post" action="#" class=" col-8 ms-5 p-4 mb-3 bg-light rounded">
+                        <fieldset class="rounded p-3 rounded border border-info">
+                            <hr>
+                            <legend class="rounded p-3 h4 fw-bold text-success"> Your payment informations</legend>
+                            <hr>
+                            <div class="mb-3">
+                                <label for="address" class="form-label fw-bold">Address</label>
+                                <input type="text" class="form-control" id="address" name="address" required placeholder="Enter your shipping address">
+                            </div>
+                            <div class="mb-3">
+                                <label for="email" class="form-label fw-bold">Email Address</label>
+                                <input type="email" class="form-control" id="email" name="email" required placeholder="Enter your email address">
+                            </div>
+                            <div class="mb-3">
+                                <label for="payment" class="form-label fw-bold">Payment Method</label>
+                                <select class="form-select" id="payment" name="payment" required>
+                                    <option value="">Select a payment method</option>
+                                    <option value="card">Credit/Debit Card</option>
+                                    <option value="paypal">PayPal</option>
+                                    <option value="orange-money">Orange Money</option>
+                                    <option value="mtn-momo">MTN Mobile Money</option>
+                                </select>
+                            </div>
+                            <div class="mb-4 p-3 bg-white rounded">
+                                <h5 class="mb-2 text-success fw-bold">Order Summary</h5>
+                                <div class="d-flex justify-content-between">
+                                    <span>Items:</span>
+                                    <strong>6</strong>
+                                </div>
+                                <div class="d-flex justify-content-between">
+                                    <span>Total:</span>
+                                    <strong>50 000 FCFA</strong>
+                                </div>
+                            </div>
+                            <button type="submit" class="btn btn-success w-100 py-2 fs-5">
+                                <i class="fa fa-credit-card me-2"></i>
+                                Pay
+                            </button>
+                        </fieldset>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

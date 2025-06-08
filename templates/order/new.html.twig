@@ -3,9 +3,35 @@
 {% block title %}New Order{% endblock %}
 
 {% block body %}
-    <h1>Create new Order</h1>
+    {{ include('partials/admin_navbar.html.twig') }}
+    <div class="container py-4">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h1 class="mb-0 h2">Create New order</h1>
+            <a href="{{ path('app_home') }}" class="btn btn-secondary">
+                <i class="fa fa-arrow-left me-1"></i> Back to home
+            </a>
+        </div>
+    </div>
+    <hr class="my-1">
+    <div class="row container mb-5 ms-4 mt-2">
+        <div class="col-md-12 mb-4">
+            {# <p class="text-center text-muted">Fill out the form below to add a new category.</p> #}
+        </div>
+        <div class="col-md-6 bg-light p-4 rounded shadow">
+            {{ form_start(form) }}
+            <div class="mb-3">
+                <label for="category_description" class="form-label">Date</label>
+                {{ form_widget(form.date, {'attr': {'class': 'form-control'}}) }}
+            </div>
+            <button class="btn btn-primary" type="submit">{{ button_label|default('Save') }}</button>
+            {{ form_end(form) }}
+        </div>
+        <div class="col-md-6 text-center">
+            <i class="fa-solid fa-folder-plus fa-5x text-primary"></i>
+            <h2 class="mt-5">Why Create an order?</h2>
+            <p class="lead">Organize your products efficiently and enhance user experience.</p>
+            <p class="text-muted">Orders help customers track ordered products easily and improve navigation.</p>
+        </div>
+    </div>
 
-    {{ include('order/_form.html.twig') }}
-
-    <a href="{{ path('app_order_index') }}">back to list</a>
 {% endblock %}

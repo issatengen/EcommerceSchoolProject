@@ -18,7 +18,7 @@ class SecurityController extends AbstractController
         // last username entered by the user
         $lastUsername = $authenticationUtils->getLastUsername();
 
-        if ($this->getUser()) {
+        if ($this->getUser() ) {
             // if the user is already logged in, redirect to the homepage
             return $this->redirectToRoute('app_admin_dashboard');
         }

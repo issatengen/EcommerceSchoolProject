@@ -24,10 +24,6 @@ class Order
 
     #[ORM\ManyToOne(inversedBy: 'orders')]
     #[ORM\JoinColumn(nullable: false)]
-    private ?Customer $customer = null;
-
-    #[ORM\ManyToOne(inversedBy: 'orders')]
-    #[ORM\JoinColumn(nullable: false)]
     private ?User $user = null;
 
     /**
@@ -35,6 +31,9 @@ class Order
      */
     #[ORM\OneToMany(targetEntity: OrderLine::class, mappedBy: 'orders', orphanRemoval: true)]
     private Collection $orderLine;
+
+    #[ORM\Column(nullable: true)]
+    private ?bool $status = null;
 
     public function __construct()
     {
@@ -66,18 +65,6 @@ class Order
     public function setDate(\DateTime $date): static
     {
         $this->date = $date;
-
-        return $this;
-    }
-
-    public function getCustomer(): ?Customer
-    {
-        return $this->customer;
-    }
-
-    public function setCustomer(?Customer $customer): static
-    {
-        $this->customer = $customer;
 
         return $this;
     }
@@ -120,6 +107,18 @@ class Order
                 $orderLine->setOrders(null);
             }
         }
+
+        return $this;
+    }
+
+    public function isStatus(): ?bool
+    {
+        return $this->status;
+    }
+
+    public function setStatus(?bool $status): static
+    {
+        $this->status = $status;
 
         return $this;
     }

@@ -12,19 +12,26 @@
                         <i class="fa ms-2 me-1 fa-list{% if app.request.attributes.get('_route') starts with 'app_category' %} fa-spin{% endif %}"></i> Categories 
                     </a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link {% if app.request.attributes.get('_route') starts with 'app_user' %} fw-bold {% endif %}" href="{{ path('app_user_index') }}">
-                        <i class="fa fa-users{% if app.request.attributes.get('_route') starts with 'app_user' %} fa-spin {% endif %}"></i> Users 
-                    </a>
-                </li>
-                <li class="nav-item">
+                {# {% if app.user.role.code == 'ADMIN' %} #}
+                    <li class="nav-item">
+                        <a class="nav-link {% if app.request.attributes.get('_route') starts with 'app_user' %} fw-bold {% endif %}" href="{{ path('app_user_index') }}">
+                            <i class="fa fa-users{% if app.request.attributes.get('_route') starts with 'app_user' %} fa-spin {% endif %}"></i> Users 
+                        </a>
+                    </li>
+                    <li class="nav-item">
                     <a class="nav-link {% if app.request.attributes.get('_route') starts with 'app_role' %} fw-bold {% endif %}" href="{{ path('app_role_index') }}">
                         <i class="fa fa-shield-alt{% if app.request.attributes.get('_route') starts with 'app_role' %} fa-spin {% endif %}"></i> Role 
                     </a>
                 </li>
+                {# {% endif %} #}
                 <li class="nav-item">
                     <a class="nav-link {% if app.request.attributes.get('_route') starts with 'app_item' %} fw-bold {% endif %}" href="{{ path('app_item_index') }}">
                         <i class="fa fa-box{% if app.request.attributes.get('_route') starts with 'app_item' %} fa-spin {% endif %}"></i> Products 
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link {% if app.request.attributes.get('_route') starts with 'app_order' %} fw-bold {% endif %}" href="{{ path('app_order_index') }}">
+                        <i class="fa fa-box{% if app.request.attributes.get('_route') starts with 'app_order' %} fa-spin {% endif %}"></i> Orders 
                     </a>
                 </li>
             </ul>
@@ -55,3 +62,4 @@
         </div>
     </div>
 </nav>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>

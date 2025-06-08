@@ -100,7 +100,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         }
         // Guarantee at least ROLE_USER
         if (!in_array('ROLE_USER', $roles)) {
-            $roles[] = 'ROLE_USER';
+            $roles[] = 'ROLE_CUSTOMER';
         }
         return $roles;
     }

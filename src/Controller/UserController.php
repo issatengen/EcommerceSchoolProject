@@ -35,10 +35,7 @@ final class UserController extends AbstractController
     #[Route('/new', name: 'app_user_new', methods: ['GET', 'POST'])]
     public function new(Request $request, EntityManagerInterface $entityManager, UserPasswordHasherInterface $pwh): Response
     {
-        if ($this->getUser() === null || !$this->isGranted('ROLE_ADMIN')) {
-            return $this->redirectToRoute('app_login');
-        }
-        $user = new User();
+        $user = new User(); 
         // to nable save modification of the user without password
         $form = $this->createForm(UserForm::class, $user, ['include_password' => true]);
         $form->handleRequest($request);
@@ -47,11 +44,21 @@ final class UserController extends AbstractController
             $count = $entityManager -> getRepository(User::class)->count([]);
             $pass= $pwh->hashPassword($user, $user->getPassword());
             $user->setPassword($pass);
+            // Example: Find the CUSTOMER role using Doctrine
+            $customerRole = $entityManager->getRepository(Role::class)->findOneBy(['code' => 'CUSTOMER']);
+            if ($customerRole === null) {
+                $this->addFlash('error', 'No role found');
+                return $this->redirectToRoute('app_user_new');
+            }
+
+            $user->setRole($customerRole);
             $user->setCode('USER' .$count + 1);
             $entityManager->persist($user);
             $entityManager->flush();
 
-            return $this->redirectToRoute('app_user_index', [], Response::HTTP_SEE_OTHER);
+            $this->addFlash('success','Your account has been created successfully');
+
+            return $this->redirectToRoute('app_login', [], Response::HTTP_SEE_OTHER);
         }
 
         return $this->render('user/new.html.twig', [
