@@ -10,7 +10,7 @@ use App\Repository\ItemRepository;
 
 final class HomeController extends AbstractController
 {
-    #[Route('/home', name: 'app_home')]
+    #[Route('/', name: 'app_home')]
     public function index(ItemRepository $repo): Response
     {
         // Example of using EntityManagerInterface to fetch items
